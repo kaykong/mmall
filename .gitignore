@@ -1,0 +1,30 @@
+*.class
+
+#package file
+#不配置 *.jar 是因为支付宝的接口需要的jar包在maven仓库中没有,所以我们需要把这些支付宝的jar包提交到git仓库中
+*.war
+*.ear
+
+#kdiff3 ignore
+*.orig
+
+#maven ignore target文件夹下的都忽略
+target/
+
+#idea
+.idea/
+/idea/
+*.ipr
+*.iml
+*.iws
+
+# temp file临时文件
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+#system ignore
+.DS_Store
+Thumbs.db
