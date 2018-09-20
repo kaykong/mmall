@@ -1,7 +1,68 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID" version="2.5">
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+    <display-name>Archetype Created Web Application</display-name>
+
+    <!--使用spring提供的CharacterEncodingFilter , 拦截所有的请求, 自动帮我们转码了-->
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--通过查看可以得知,RequestContextListener继承的EventListener, 主要对web容器的启动和关闭做监听-->
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
+    <!--ContextLoaderListener:为了web容器和spring容器整合的一个监听器-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!--上一个提到的ContextLoaderListener, 就会加载配置的xml, 将web容器和spring容器进行整合-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:applicationContext.xml
+        </param-value>
+    </context-param>
+
+    <!--配置spring mvc的 -->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!--设置springMvc的配置文件路径-->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>WEB-INF/dispatcher-servlet.xml</param-value>
+        </init-param>
+
+        <!-- startup 大于等于0 的时候, 容器在启动时,就会初始化DispatcherServlet, 调用它的init方法 -->
+        <!-- startup 没有配置,或者配置的小于0, 那么只有在使用到DispatcherServlet时,才会加载 -->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+
 </web-app>
+
