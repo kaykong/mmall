@@ -2,7 +2,12 @@ package top.kongk.mmall.pojo;
 
 import java.util.Date;
 
+/**
+ * @Author: kk
+ * @Date: 2018/9/22 20:03
+ */
 public class Cart {
+
     private Integer id;
 
     private Integer userId;

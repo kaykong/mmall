@@ -2,6 +2,10 @@ package top.kongk.mmall.pojo;
 
 import java.util.Date;
 
+/**
+ * @author kk
+ * @date 2018/9/23 20:34
+ */
 public class User {
     private Integer id;
 
@@ -17,6 +21,9 @@ public class User {
 
     private String answer;
 
+    /**
+     * 用户角色，0-管理员,1-普通用户
+     */
     private Integer role;
 
     private Date createTime;
@@ -118,5 +125,21 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                ", role=" + role +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }
