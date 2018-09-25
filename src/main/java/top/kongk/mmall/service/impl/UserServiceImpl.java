@@ -139,6 +139,7 @@ public class UserServiceImpl implements UserService {
             ServerResponse emailResponse = checkEmail(user.getEmail());
             //如果邮箱格式不对，或者已经被占用
             if (!emailResponse.isSuccess()) {
+                emailResponse.setData(null);
                 return emailResponse;
             }
         }
@@ -148,6 +149,7 @@ public class UserServiceImpl implements UserService {
             ServerResponse phoneResponse = checkPhone(user.getPhone());
             //如果手机号格式不对，或者已经被占用
             if (!phoneResponse.isSuccess()) {
+                phoneResponse.setData(null);
                 return phoneResponse;
             }
         }

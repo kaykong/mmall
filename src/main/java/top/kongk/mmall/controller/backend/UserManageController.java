@@ -10,6 +10,8 @@ import top.kongk.mmall.common.ServerResponse;
 import top.kongk.mmall.pojo.User;
 import top.kongk.mmall.service.UserService;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * 描述：后台管理用户模块
  *
@@ -26,13 +28,15 @@ public class UserManageController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse login(String username, String password) {
+    public ServerResponse login(String username, String password, HttpSession session) {
 
         ServerResponse userResponse = userService.loginByUsernameAndPwd(username, password);
 
         if (userResponse.isSuccess()) {
             User user = (User) userResponse.getData();
-            if (user.getRole() != Const.ROLE_ADMIN) {
+            if (user.getRole() == Const.ROLE_ADMIN) {
+                session.setAttribute(Const.CURRENT_ADMIN, user);
+            } else {
                 return ServerResponse.createSuccessWithMsg("普通用户无权限");
             }
         }

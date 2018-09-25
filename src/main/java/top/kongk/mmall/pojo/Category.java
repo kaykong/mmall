@@ -2,8 +2,27 @@ package top.kongk.mmall.pojo;
 
 import java.util.Date;
 
+/**
+ * 描述：商品类别
+ *
+ * @author kk
+ * @date 2018/9/25 9:38
+ */
 public class Category {
     private Integer id;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", parentId=" + parentId +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", sortOrder=" + sortOrder +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 
     private Integer parentId;
 

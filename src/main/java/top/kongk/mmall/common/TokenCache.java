@@ -67,6 +67,12 @@ public class TokenCache {
         return value;
     }
 
+    /**
+     * 描述：在确定该key对应的token不必再用后, 就清除掉
+     *
+     * @param key 用户名作为key
+     * @return void
+     */
     public static void invalidateToken(String key) {
         try {
             loadingCache.invalidate(key + TokenCache.TOKEN_PREFIX);
