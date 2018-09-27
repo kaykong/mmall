@@ -1,5 +1,9 @@
 package top.kongk.mmall.common;
 
+import com.google.common.collect.Sets;
+
+import java.util.Set;
+
 /**
  * 描述：项目中用到的常量
  *
@@ -13,5 +17,11 @@ public class Const {
     public static final String CURRENT_ADMIN = "currentAdmin";
     public static final int ROLE_ADMIN = 0;
     public static final int ROLE_NORMAL = 1;
+    public static final int STATUS_ONSALE = 1;
+    public static final int STATUS_NOT_ONSALE = 1;
+    public static final int STATUS_DELETE = 3;
 
+    public interface ProductSort {
+        Set<String> sort = Sets.newHashSet("price asc", "price desc");
+    }
 }

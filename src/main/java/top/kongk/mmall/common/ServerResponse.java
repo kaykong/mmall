@@ -146,4 +146,9 @@ public class ServerResponse<T> implements Serializable {
         return new ServerResponse<>(ResponseCode.NEED_LOGIN.getCode(), msg);
     }
 
+    public static <T> ServerResponse<T> createIllegalArgumentError() {
+        return new ServerResponse<>(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数错误");
+    }
+
+
 }

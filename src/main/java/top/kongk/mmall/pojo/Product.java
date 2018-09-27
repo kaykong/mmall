@@ -3,7 +3,11 @@ package top.kongk.mmall.pojo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * @author kk
+ */
 public class Product {
+
     private Integer id;
 
     private Integer categoryId;
