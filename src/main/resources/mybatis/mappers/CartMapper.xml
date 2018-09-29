@@ -15,31 +15,65 @@
   <sql id="Base_Column_List" >
     id, user_id, product_id, quantity, checked, create_time, update_time
   </sql>
+
+  <sql id="cartList_Column_List" >
+    id, user_id, product_id, quantity, checked
+  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from mmall_cart
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectCartsByUserId" resultType="top.kongk.mmall.pojo.Cart">
+    SELECT
+    <include refid="cartList_Column_List" />
+    from mmall_cart
+    where user_id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCartByUserIdAndProductId" resultType="top.kongk.mmall.pojo.Cart">
+    SELECT
+    <include refid="cartList_Column_List" />
+    from mmall_cart
+    where user_id = #{userId,jdbcType=INTEGER} and product_id = #{productId,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from mmall_cart
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
+  <delete id="deleteByUserIdAndProductId">
+    delete from mmall_cart
+    where mmall_cart.user_id = #{userId} and product_id in (${productId})
+  </delete>
+
+  <delete id="deleteByUserIdAndProductIdLists">
+    delete from mmall_cart
+    where mmall_cart.user_id = #{userId}
+    <if test="productIdList != null">
+      and product_id in
+      <foreach collection="productIdList" open="(" item="productId" separator="," close=")">
+        #{productId}
+      </foreach>
+    </if>
+  </delete>
+
   <insert id="insert" parameterType="top.kongk.mmall.pojo.Cart" >
-    insert into mmall_cart (id, user_id, product_id, 
+    insert into mmall_cart ( user_id, product_id,
       quantity, checked, create_time, update_time)
 
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+    values (#{userId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER},
       #{quantity,jdbcType=INTEGER}, #{checked,jdbcType=INTEGER}, now(), now())
   </insert>
 
   <insert id="insertSelective" parameterType="top.kongk.mmall.pojo.Cart" >
     insert into mmall_cart
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
+
       <if test="userId != null" >
         user_id,
       </if>
@@ -52,17 +86,14 @@
       <if test="checked != null" >
         checked,
       </if>
-      <if test="createTime != null" >
+
         create_time,
-      </if>
-      <if test="updateTime != null" >
+
         update_time,
-      </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
+
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
       </if>
@@ -75,12 +106,12 @@
       <if test="checked != null" >
         #{checked,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null" >
+
         now(),
-      </if>
-      <if test="updateTime != null" >
+
+
         now(),
-      </if>
+
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="top.kongk.mmall.pojo.Cart" >
@@ -98,12 +129,9 @@
       <if test="checked != null" >
         checked = #{checked,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = now(),
-      </if>
+
+        update_time = now()
+
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -113,8 +141,22 @@
       product_id = #{productId,jdbcType=INTEGER},
       quantity = #{quantity,jdbcType=INTEGER},
       checked = #{checked,jdbcType=INTEGER},
---       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateSelectAllOrNot">
+    update mmall_cart
+    set
+      checked = #{check,jdbcType=INTEGER},
+      update_time = now()
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateQuantityByUserIdAndProductId">
+    update mmall_cart
+    set
+      quantity = #{quantity,jdbcType=INTEGER},
+      checked = 1,
+      update_time = now()
+    where user_id = #{userId,jdbcType=INTEGER} and product_id = #{productId,jdbcType=INTEGER}
   </update>
 </mapper>

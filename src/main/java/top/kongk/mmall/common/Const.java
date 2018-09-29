@@ -24,4 +24,17 @@ public class Const {
     public interface ProductSort {
         Set<String> sort = Sets.newHashSet("price asc", "price desc");
     }
+
+    public interface Cart {
+        /**
+         * 根据购物车的商品的数量是否满足库存来赋值
+         */
+        String LIMIT_QUANTITY_SUCCESS = "LIMIT_NUM_SUCCESS";
+        String LIMIT_QUANTITY_FAIL = "LIMIT_NUM_FAIL";
+        /**
+         * 购物车选中状态
+         */
+        int CHECKED = 1;
+        int UN_CHECKED = 0;
+    }
 }
