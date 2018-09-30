@@ -1,7 +1,12 @@
 package top.kongk.mmall.pojo;
 
 import java.util.Date;
-
+/**
+ * 描述：收货地址实体类
+ *
+ * @author kk
+ * @date 2018/9/30 12:11
+ */
 public class Shipping {
     private Integer id;
 
