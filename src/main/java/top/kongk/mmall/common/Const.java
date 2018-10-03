@@ -37,4 +37,70 @@ public class Const {
         int CHECKED = 1;
         int UN_CHECKED = 0;
     }
+
+    public enum OrderStatus {
+        /**
+         * 订单状态用到的枚举
+         */
+        CANCELED("已取消", 0),
+        NO_PAY("未支付", 10),
+        PAIED("已支付", 20),
+        SHIPPED("已发货", 40),
+        ORDER_SUCCESS("订单已完成", 50),
+        ORDER_CLOSE("订单已关闭", 60);
+
+        private String value;
+        private int code;
+
+        OrderStatus(String value, int code) {
+            this.value = value;
+            this.code = code;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public int getCode() {
+            return code;
+        }
+    }
+
+    /**
+     * 阿里官方 交易状态码
+     */
+    public interface AlipayCallback {
+        
+        String TRADE_STATUS_WAIT_BUYER_PAY = "WAIT_BUYER_PAY";
+        String TRADE_STATUS_TRADE_SUCCESS = "TRADE_SUCCESS";
+
+        String RESPONSE_SUCCESS = "success";
+        String RESPONSE_FAILED = "failed";
+
+    }
+
+    /**
+     * 支付平台
+     */
+    public enum PayPlatformEnum{
+        /**
+         * 支付平台
+         */
+        ALIPAY(1,"支付宝");
+
+        PayPlatformEnum(int code,String value){
+            this.code = code;
+            this.value = value;
+        }
+        private String value;
+        private int code;
+
+        public String getValue() {
+            return value;
+        }
+
+        public int getCode() {
+            return code;
+        }
+    }
 }

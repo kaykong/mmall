@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import top.kongk.mmall.service.FileService;
 import top.kongk.mmall.util.FtpUtil;
+import top.kongk.mmall.util.PropertiesUtil;
 
 import java.io.File;
 import java.util.UUID;
@@ -60,7 +61,7 @@ public class FileServiceImpl implements FileService {
             //文件上传到 tomcat 上
             multipartFile.transferTo(targetFile);
             //上传到 ftp 服务器
-            FtpUtil.uploadToFtp("image", Lists.newArrayList(targetFile));
+            FtpUtil.uploadToFtp(PropertiesUtil.getProperty("ftp.server.filePath.img"), Lists.newArrayList(targetFile));
             //把 tomcat 上的文件删除
             targetFile.delete();
         } catch (Exception e) {

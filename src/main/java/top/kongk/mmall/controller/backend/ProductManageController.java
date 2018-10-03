@@ -162,7 +162,7 @@ public class ProductManageController {
             String url = PropertiesUtil.getProperty("ftp.server.http.prefix");
             Map<String, String> map = new HashMap<>(2);
             map.put("uri", targetName);
-            map.put("url", url + targetName);
+            map.put("url", url + PropertiesUtil.getProperty("ftp.server.filePath.img") + targetName);
             return ServerResponse.createSuccess(map);
         }
     }

@@ -55,6 +55,8 @@ public class FtpUtil {
             return false;
         }
 
+
+
         FtpUtil ftpUtil = new FtpUtil(ftpIp, 21, ftpUser, ftpPass);
         logger.info("开始连接ftp服务器");
         boolean result = ftpUtil.uploadFile(romotePath, fileList);
@@ -70,6 +72,19 @@ public class FtpUtil {
         FileInputStream fis = null;
         if (connectServer(this.ip, this.port, this.user, this.password)) {
             try {
+
+                /**
+                * 如果目标文件夹不存在, 创建文件夹
+                */
+                File fileromotePath = new File(PropertiesUtil.getProperty("ftp.server.realPath") + romotePath);
+                if (!fileromotePath.exists()) {
+                    fileromotePath.setWritable(true);
+                    fileromotePath.mkdirs();
+                }
+                System.out.println(fileromotePath.getPath());
+                System.out.println(fileromotePath.getAbsolutePath());
+
+
                 //在调用connectServer的时候ftpClient已经初始化了
                 //在ftp服务器根目录下创建一个文件夹 romotePath
                 ftpClient.changeWorkingDirectory(romotePath);

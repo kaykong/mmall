@@ -3,6 +3,12 @@ package top.kongk.mmall.pojo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * 描述：订单项
+ *
+ * @author kk
+ * @date 2018/10/1 19:09
+ */
 public class OrderItem {
     private Integer id;
 
@@ -130,5 +136,22 @@ public class OrderItem {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", orderNo=" + orderNo +
+                ", productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", productImage='" + productImage + '\'' +
+                ", currentUnitPrice=" + currentUnitPrice +
+                ", quantity=" + quantity +
+                ", totalPrice=" + totalPrice +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

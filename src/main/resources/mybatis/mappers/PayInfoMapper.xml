@@ -28,10 +28,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="top.kongk.mmall.pojo.PayInfo" >
-    insert into mmall_pay_info (id, user_id, order_no, 
+    insert into mmall_pay_info (user_id, order_no,
       pay_platform, platform_number, platform_status, 
       create_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, 
+    values (#{userId,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT},
       #{payPlatform,jdbcType=INTEGER}, #{platformNumber,jdbcType=VARCHAR}, #{platformStatus,jdbcType=VARCHAR}, 
       now(), now())
   </insert>
@@ -56,12 +56,12 @@
       <if test="platformStatus != null" >
         platform_status,
       </if>
-      <if test="createTime != null" >
+
         create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
+
+
+        update_time
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -82,12 +82,11 @@
       <if test="platformStatus != null" >
         #{platformStatus,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+
         now(),
-      </if>
-      <if test="updateTime != null" >
+
         now(),
-      </if>
+
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="top.kongk.mmall.pojo.PayInfo" >
