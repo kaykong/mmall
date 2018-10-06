@@ -219,5 +219,11 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="updateStockByProductIdAndQuantity">
+    UPDATE mmall_product
+    SET stock = stock - #{quantity},
+      update_time = now()
+    where id = #{productId} and stock >= #{quantity}
+  </update>
 
 </mapper>

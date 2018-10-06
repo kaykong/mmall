@@ -29,7 +29,7 @@ public class ProductListVo {
     private static String imgHost;
 
     static {
-        imgHost = PropertiesUtil.getProperty("ftp.server.http.prefix");
+        imgHost = PropertiesUtil.getProperty("ftp.server.http.img.prefix");
     }
 
     public ProductListVo() {

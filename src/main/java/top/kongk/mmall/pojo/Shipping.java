@@ -8,6 +8,7 @@ import java.util.Date;
  * @date 2018/9/30 12:11
  */
 public class Shipping {
+
     private Integer id;
 
     private Integer userId;

@@ -64,13 +64,23 @@ public class Const {
         public int getCode() {
             return code;
         }
+
+        public static String codeOf(int code) {
+            for (OrderStatus orderStatus : values()) {
+                if (orderStatus.getCode() == code) {
+                    return orderStatus.getValue();
+                }
+            }
+
+            return null;
+        }
     }
 
     /**
      * 阿里官方 交易状态码
      */
     public interface AlipayCallback {
-        
+
         String TRADE_STATUS_WAIT_BUYER_PAY = "WAIT_BUYER_PAY";
         String TRADE_STATUS_TRADE_SUCCESS = "TRADE_SUCCESS";
 
@@ -82,16 +92,17 @@ public class Const {
     /**
      * 支付平台
      */
-    public enum PayPlatformEnum{
+    public enum PayPlatformEnum {
         /**
          * 支付平台
          */
-        ALIPAY(1,"支付宝");
+        ALIPAY(1, "支付宝");
 
-        PayPlatformEnum(int code,String value){
+        PayPlatformEnum(int code, String value) {
             this.code = code;
             this.value = value;
         }
+
         private String value;
         private int code;
 
@@ -101,6 +112,41 @@ public class Const {
 
         public int getCode() {
             return code;
+        }
+    }
+
+    /**
+     * 支付方式
+     */
+    public enum PaymentTypeEnum {
+        /**
+         * 在线支付
+         */
+        ONLINE_PAY(1, "在线支付");
+
+        PaymentTypeEnum(int code, String value) {
+            this.code = code;
+            this.value = value;
+        }
+
+        private int code;
+        private String value;
+
+        public int getCode() {
+            return code;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public static String codeOf(int code) {
+            for (PaymentTypeEnum paymentTypeEnum : values()) {
+                if (paymentTypeEnum.getCode() == code) {
+                    return paymentTypeEnum.getValue();
+                }
+            }
+            return null;
         }
     }
 }

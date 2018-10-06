@@ -53,6 +53,14 @@ public interface CartMapper {
      */
     int updateByPrimaryKeySelective(Cart record);
 
+    /**
+     * 描述：根据userId和 productId 更新数量
+     *
+     * @param userId userId
+     * @param productId productId
+     * @param quantity 购物车商品数量
+     * @return int
+     */
     int updateQuantityByUserIdAndProductId(@Param("userId") Integer userId,
                                            @Param("productId") Integer productId,
                                            @Param("quantity") Integer quantity);
@@ -92,11 +100,11 @@ public interface CartMapper {
     int deleteByUserIdAndProductId(@Param("userId") Integer userId, @Param("productId") String productId);
 
     /**
-     * 描述：根据用户id和 list整数的商品id 删除Cart表中的商品
+     * 描述：根据用户id和 list的商品id 删除Cart表中的商品
      *
      * @param userId 用户id
      * @param productIdList 整数数组
-     * @return int
+     * @return int 实际影响的行数
      */
     int deleteByUserIdAndProductIdLists(@Param("userId") Integer userId, @Param("productIdList") List<String> productIdList);
 
@@ -108,4 +116,13 @@ public interface CartMapper {
      * @return int
      */
     int updateSelectAllOrNot(@Param("userId") Integer userId, @Param("check") int check);
+
+    /**
+     * 描述：从购物车Cart表中获取字段 checked = 1 的记录 (获取购物车中被勾选的商品)
+     *
+     * @param userId 用户id
+     * @return java.util.List<top.kongk.mmall.pojo.Cart>
+     */
+    List<Cart> selectCheckedCartsByUserId(Integer userId);
+
 }

@@ -230,7 +230,6 @@ public class CartServiceImpl implements CartService {
         List<String> productIdList = Arrays.asList(split);
         int count = 0;
         try {
-            //count = cartMapper.deleteByUserIdAndProductId(userId, productId);
             count = cartMapper.deleteByUserIdAndProductIdLists(userId, productIdList);
         } catch (Exception e) {
             logger.error("CartServiceImpl.deleteProduct Execption", e);

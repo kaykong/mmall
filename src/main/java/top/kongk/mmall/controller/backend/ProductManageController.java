@@ -159,10 +159,10 @@ public class ProductManageController {
         if (targetName == null) {
             return ServerResponse.createErrorWithMsg("上传文件失败");
         } else {
-            String url = PropertiesUtil.getProperty("ftp.server.http.prefix");
+
             Map<String, String> map = new HashMap<>(2);
             map.put("uri", targetName);
-            map.put("url", url + PropertiesUtil.getProperty("ftp.server.filePath.img") + targetName);
+            map.put("url", PropertiesUtil.getProperty("ftp.server.http.img.prefix") + targetName);
             return ServerResponse.createSuccess(map);
         }
     }
@@ -197,7 +197,7 @@ public class ProductManageController {
             map.put("msg", "上传失败");
             return map;
         } else {
-            String url = PropertiesUtil.getProperty("ftp.server.http.prefix");
+            String url = PropertiesUtil.getProperty("ftp.server.http.img.prefix");
             Map<String, Object> map = new HashMap<>(2);
             map.put("file_path", url + targetName);
             map.put("msg", "上传成功");

@@ -105,4 +105,16 @@ public interface ProductMapper {
      */
     List<Product> selectListByNameAndId(@Param("productName") String productName,
                                         @Param("productId") Integer productId);
+
+
+    /**
+     * 描述：根据productId 更新 product 的库存
+     *
+     * @param productId id
+     * @param quantity 要减去的商品数量
+     * @return int
+     */
+    int updateStockByProductIdAndQuantity(@Param("productId") Integer productId, @Param("quantity") Integer quantity);
+
+
 }

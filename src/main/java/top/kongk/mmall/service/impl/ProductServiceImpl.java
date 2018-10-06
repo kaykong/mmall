@@ -258,7 +258,7 @@ public class ProductServiceImpl implements ProductService {
         ProductDetailVo productDetailVo = new ProductDetailVo(product);
 
         //从配置文件中获取
-        productDetailVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
+        productDetailVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.img.prefix"));
         //从数据库中获取parentId
         Category category = null;
         try {

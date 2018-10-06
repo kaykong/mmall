@@ -41,6 +41,13 @@
     where user_id = #{userId,jdbcType=INTEGER} and product_id = #{productId,jdbcType=INTEGER}
   </select>
 
+  <select id="selectCheckedCartsByUserId" resultType="top.kongk.mmall.pojo.Cart">
+    SELECT
+    <include refid="cartList_Column_List" />
+    from mmall_cart
+    where user_id = #{userId,jdbcType=INTEGER} and checked = 1
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from mmall_cart
     where id = #{id,jdbcType=INTEGER}

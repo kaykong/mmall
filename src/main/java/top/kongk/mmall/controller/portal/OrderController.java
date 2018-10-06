@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import top.kongk.mmall.common.Const;
 import top.kongk.mmall.common.ServerResponse;
@@ -36,6 +37,13 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    /**
+     * 描述： 支付订单
+     *
+     * @param session session
+     * @param orderNo 订单号
+     * @return top.kongk.mmall.common.ServerResponse
+     */
     @RequestMapping(value = "/pay.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse pay(HttpSession session, long orderNo) {
@@ -49,6 +57,62 @@ public class OrderController {
         return orderService.pay(orderNo, user.getId(), path);
     }
 
+    /**
+     * 描述：创建订单
+     *
+     * @param session    session
+     * @param shippingId 收货地址id
+     * @return top.kongk.mmall.common.ServerResponse
+     */
+    @RequestMapping(value = "/create.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse create(HttpSession session, Integer shippingId) {
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createNeedloginError("用户未登录,请登录");
+        }
+
+        return orderService.createOrder(user.getId(), shippingId);
+    }
+
+    /**
+     * 描述：在未支付情况下取消订单
+     *
+     * @param session session
+     * @param orderNo 订单号
+     * @return top.kongk.mmall.common.ServerResponse
+     */
+    @RequestMapping(value = "/cancel.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse cancel(HttpSession session, Long orderNo) {
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createNeedloginError("用户未登录,请登录");
+        }
+
+        return orderService.cancelOrder(user.getId(), orderNo);
+    }
+
+    /**
+     * 描述：获取购物车中已经被选中的商品详情
+     *
+     * @param session session
+     * @return top.kongk.mmall.common.ServerResponse
+     */
+    @RequestMapping(value = "/get_order_cart_product.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse getOrderCartCheckedProduct(HttpSession session) {
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createNeedloginError("用户未登录,请登录");
+        }
+
+        return orderService.getOrderCartCheckedProduct(user.getId());
+    }
+
     @RequestMapping(value = "/query_order_pay_status.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse queryOrderPayStatus(HttpSession session, long orderNo) {
@@ -59,6 +123,32 @@ public class OrderController {
         }
 
         return orderService.queryOrderPayStatus(orderNo, user.getId());
+    }
+
+    @RequestMapping(value = "/detail.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse detail(HttpSession session, long orderNo) {
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createNeedloginError("用户未登录,请登录");
+        }
+
+        return orderService.getOrderDetail(orderNo, user.getId());
+    }
+
+    @RequestMapping(value = "/list.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse getList(HttpSession session,
+                                  @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                  @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createNeedloginError("用户未登录,请登录");
+        }
+        //获取订单list 不需要指定订单号
+        return orderService.getList(user.getId(), pageNum, pageSize);
     }
 
     @RequestMapping(value = "/alipay_callback.do")
